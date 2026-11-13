@@ -31,5 +31,13 @@ EOT
     summary           = optional(string)
     type              = optional(string)
   }))
+  validation {
+    condition = alltrue([
+      for k, v in var.extension_servicenows : (
+        contains(["manual_sync", "sync_all"], v.sync_options)
+      )
+    ])
+    error_message = "must be one of: \"manual_sync\", \"sync_all\""
+  }
 }
 
